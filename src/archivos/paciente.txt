@@ -1,0 +1,4 @@
+72179861  Leon  Ortiz  Diego  Casado  Masculino  13/02/2000  959837200  No tengo  Me pica la panza
+72179862  Leon  Ortiz  Angie  Soltero  Femenino  22/08/2020  99999333  No tengo  Dolor de dedo
+72179861  Leon  Ortiz  Diego  Soltero  Masculino  13/02/2000  959837200  No tengo  Me pica el dedo
+72179861  Leon  Ortiz  Diego  Soltero  Masculino  13/02/2000  959837200  No tengo  Me pica el dedo
