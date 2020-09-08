@@ -2,7 +2,7 @@ package Clases;
 
 
 public class Consulta {
-    private int codigoHist;
+    private int codigoCit;
     private String signos;
     private String sintomas;
     private String resultados;
@@ -12,7 +12,7 @@ public class Consulta {
 
     }
     public Consulta(int codigoHist, String signos, String sintomas, String resultados, String diagnostico) {
-        this.codigoHist = codigoHist;
+        this.codigoCit = codigoHist;
         this.signos = signos;
         this.sintomas = sintomas;
         this.resultados = resultados;
@@ -20,12 +20,12 @@ public class Consulta {
     }
 
     /*----------------------------------------Getters and Setters--------------------------------------*/
-    public int getCodigoHist() {
-        return codigoHist;
+    public int getCodigoCit() {
+        return codigoCit;
     }
 
-    public void setCodigoHist(int codigoHist) {
-        this.codigoHist = codigoHist;
+    public void setCodigoCit(int codigoHist) {
+        this.codigoCit = codigoHist;
     }
 
     public String getSignos() {
