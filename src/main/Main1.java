@@ -20,7 +20,7 @@ import java.util.Date;
  * 4 - Se puede acceder a historial medico (TODOS LOS PACIENTES)
  * 5 - Se puede acceder a tratamiento
  */
-public class Main {
+public class Main1 {
     public static void main(String[] args) {
         Date horaCita;
         DateFormat hourFormat = new SimpleDateFormat("HH:mm");
