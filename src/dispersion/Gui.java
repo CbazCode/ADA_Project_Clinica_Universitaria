@@ -6,6 +6,7 @@
 package dispersion;
 
 import javax.swing.JOptionPane;
+import main.main;
 
 /**
  *
@@ -21,7 +22,7 @@ public class Gui extends javax.swing.JFrame {
         
                miUsuario.Insertar(15200198,"Sebastian.Baltazar");
                miUsuario.Insertar(17200284,"Gianela.Mallqui");
-               miUsuario.Insertar(18200315,"Francis.");
+               miUsuario.Insertar(18200315,"Francis.Mori");
                miUsuario.Insertar(18200312,"Diego.Leon");
                miUsuario.Insertar(18200074,"Sebastian.Asis");
                miUsuario.Insertar(18200112,"Jesus.Leon");
@@ -243,6 +244,7 @@ public class Gui extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         String mensaje = " ";
+        boolean logeado = false, mostrar=true;
 
         try {
 
@@ -257,9 +259,14 @@ public class Gui extends javax.swing.JFrame {
                 if (pos != -1 && textos.equals(miUsuario.getNombreDeUsuario(pos)) )
                 {
                     mensaje+="\nUsuario correcto";
+                    logeado = true;
+                    mostrar = false;
 
                 }
-                else    mensaje="\n\nUsuario incorrecto";
+                else{
+                    mensaje="\n\nUsuario incorrecto";
+                    
+                }
 
             } else {
 
@@ -270,9 +277,16 @@ public class Gui extends javax.swing.JFrame {
 
             mensaje = "Los datos no son validos";
         }
-
-        JOptionPane.showMessageDialog(null, mensaje);
-
+        if(mostrar){
+            JOptionPane.showMessageDialog(null, mensaje);
+        }
+        
+        if(logeado){
+             main m = new main();
+             m.setVisible(true);
+             dispose();
+        
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 

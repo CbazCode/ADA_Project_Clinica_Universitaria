@@ -136,7 +136,7 @@
         <Component class="javax.swing.JComboBox" name="comboFiltro">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] { &quot;Codigo&quot;, &quot;DNI&quot;, &quot;Especialidad&quot;, &quot;Fecha&quot;,&quot;Hora&quot; })" type="code"/>
+              <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] { &quot;Codigo&quot;, &quot;DNI&quot;, &quot;Especialidad&quot;, &quot;Fecha&quot;,&quot;Hora&quot; , &quot;Precio&quot;})" type="code"/>
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
               <Color id="Cursor Por defecto"/>
@@ -301,7 +301,7 @@
         <Component class="javax.swing.JComboBox" name="jComboBox1">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] { &quot;Codigo&quot;, &quot;Item 2&quot;, &quot;Item 3&quot;, &quot;Item 4&quot; })" type="code"/>
+              <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] { &quot;Codigo&quot;, &quot;DNI&quot;, &quot;Especialidad&quot;, &quot;Fecha&quot;,&quot;Hora&quot;,&quot;Precio&quot; })" type="code"/>
             </Property>
           </Properties>
           <Events>

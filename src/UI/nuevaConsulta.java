@@ -24,8 +24,8 @@ public class nuevaConsulta extends javax.swing.JDialog {
     /**
      * Creates new form nuevoMedico
      */
-    public nuevaConsulta(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public nuevaConsulta(){//java.awt.Frame parent, boolean modal) {
+        //super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null); 
         this.getRootPane().setBorder(border);
@@ -363,14 +363,15 @@ public class nuevaConsulta extends javax.swing.JDialog {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                nuevaConsulta dialog = new nuevaConsulta(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                //nuevaConsulta dialog = new nuevaConsulta(new javax.swing.JFrame(), true);
+                /*dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
                     }
                 });
-                dialog.setVisible(true);
+                dialog.setVisible(true);*/
+                new nuevaConsulta().setVisible(true);
             }
         });
     }

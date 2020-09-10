@@ -78,9 +78,9 @@ public class citaMain extends javax.swing.JFrame {
         columnModel.getColumn(0).setPreferredWidth(200);
         columnModel.getColumn(1).setPreferredWidth(200);
         columnModel.getColumn(2).setPreferredWidth(200);
-        columnModel.getColumn(3).setPreferredWidth(170);
-        columnModel.getColumn(4).setPreferredWidth(170);
-        columnModel.getColumn(5).setPreferredWidth(170);
+        columnModel.getColumn(3).setPreferredWidth(120);
+        columnModel.getColumn(4).setPreferredWidth(110);
+        columnModel.getColumn(5).setPreferredWidth(120);
         
         
         JTableHeader header = tablaTest.getTableHeader();
@@ -196,7 +196,7 @@ public class citaMain extends javax.swing.JFrame {
             }
         });
 
-        comboFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Codigo", "DNI", "Especialidad", "Fecha","Hora" }));
+        comboFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Codigo", "DNI", "Especialidad", "Fecha","Hora" , "Precio"}));
         comboFiltro.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jLabel3.setText("Buscar:");
@@ -288,7 +288,7 @@ public class citaMain extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Codigo", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Codigo", "DNI", "Especialidad", "Fecha","Hora","Precio" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -381,6 +381,51 @@ public class citaMain extends javax.swing.JFrame {
             trs =new TableRowSorter(modelo);
             tablaTest.setRowSorter(trs);
         }
+        if(comboFiltro.getSelectedIndex()==1){
+            textBuscador.addKeyListener(new KeyAdapter() {
+                public void keyReleased(KeyEvent ke){
+                    trs.setRowFilter(RowFilter.regexFilter("(?i)"+textBuscador.getText(), 1));
+                }
+            });
+            trs =new TableRowSorter(modelo);
+            tablaTest.setRowSorter(trs);
+        }
+        if(comboFiltro.getSelectedIndex()==2){
+            textBuscador.addKeyListener(new KeyAdapter() {
+                public void keyReleased(KeyEvent ke){
+                    trs.setRowFilter(RowFilter.regexFilter("(?i)"+textBuscador.getText(), 2));
+                }
+            });
+            trs =new TableRowSorter(modelo);
+            tablaTest.setRowSorter(trs);
+        }
+        if(comboFiltro.getSelectedIndex()==3){
+            textBuscador.addKeyListener(new KeyAdapter() {
+                public void keyReleased(KeyEvent ke){
+                    trs.setRowFilter(RowFilter.regexFilter("(?i)"+textBuscador.getText(), 3));
+                }
+            });
+            trs =new TableRowSorter(modelo);
+            tablaTest.setRowSorter(trs);
+        }
+        if(comboFiltro.getSelectedIndex()==4){
+            textBuscador.addKeyListener(new KeyAdapter() {
+                public void keyReleased(KeyEvent ke){
+                    trs.setRowFilter(RowFilter.regexFilter("(?i)"+textBuscador.getText(), 4));
+                }
+            });
+            trs =new TableRowSorter(modelo);
+            tablaTest.setRowSorter(trs);
+        }
+        if(comboFiltro.getSelectedIndex()==5){
+            textBuscador.addKeyListener(new KeyAdapter() {
+                public void keyReleased(KeyEvent ke){
+                    trs.setRowFilter(RowFilter.regexFilter("(?i)"+textBuscador.getText(), 5));
+                }
+            });
+            trs =new TableRowSorter(modelo);
+            tablaTest.setRowSorter(trs);
+        }
     }//GEN-LAST:event_textBuscadorKeyTyped
 
     private void bSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSalirActionPerformed
@@ -467,13 +512,22 @@ public class citaMain extends javax.swing.JFrame {
         //int n = jComboBox1.getSelectedIndex();
         //Item 0, 1, 2, 3
         if(jComboBox1.getSelectedIndex() == 0){
-            ordenarCodigoCita();
+            ordenarCita(true,0,99);
         }
         if(jComboBox1.getSelectedIndex() == 1){
-            
+            ordenarCita(true,1,99);
         }
         if(jComboBox1.getSelectedIndex() == 2){
-            
+            ordenarCita(false,3,0);
+        }
+        if(jComboBox1.getSelectedIndex() == 3){
+            ordenarCita(false,3,99);
+        }
+        if(jComboBox1.getSelectedIndex() == 4){
+            ordenarCita(false,3,1);
+        }
+        if(jComboBox1.getSelectedIndex() == 5){
+            ordenarCita(true,2,1);
         }
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
@@ -507,7 +561,44 @@ public class citaMain extends javax.swing.JFrame {
         
     }//GEN-LAST:event_bporPagarActionPerformed
 
-    public void ordenarCodigoCita(){
+    public void vaciarArchivo(){
+        File archivo = new File("src/archivos/cita.txt");
+        try {
+            PrintWriter salida  = new PrintWriter(archivo);
+            salida.print("");
+            salida.close();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace(System.out);
+        }
+    }
+    //Metodo de Seleccion
+    public void ordenaCadenas(Cita[] v, int interruptorCadenas)
+    {
+        int posMin;
+        Cita aux;
+
+        for(int i=0;i<v.length-1;i++)
+        {
+            posMin=i;
+            for(int j=i+1;j<v.length;j++){
+                if(interruptorCadenas == 0){
+                    if(v[posMin].getEspecialidad().compareTo(v[j].getEspecialidad())>0) posMin=j;
+                }
+                if(interruptorCadenas == 1){
+                    if(v[posMin].getHoraCita().compareTo(v[j].getHoraCita())>0) posMin=j;
+                }
+                              
+            }
+            if(posMin!=i)
+            {
+                aux=v[i];
+                v[i]=v[posMin];
+                v[posMin]=aux;
+            }
+
+        }
+    }
+    public void ordenarCita(boolean numero,int interruptor, int interruptorCadenas){
         Cita arrayCita[] = new Cita[citas.size()];
         for(int i = 0; i<citas.size();i++){
                 arrayCita[i]=citas.get(i);
@@ -517,24 +608,57 @@ public class citaMain extends javax.swing.JFrame {
         int jump, i, j, k ;
         Cita auxiliar;
         jump = arrayCita.length / 2;
-        while (jump > 0) {
-            for (i = jump; i < arrayCita.length; i++) {
-                j = i - jump;
-                while (j >= 0) {
-                    k = j + jump;
-                    if (arrayCita[j].getCodigoHist() <= arrayCita[k].getCodigoHist()) {
-                        j = -1;
-                    } else {
-                        auxiliar = arrayCita[j];
-                        arrayCita[j] = arrayCita[k];
-                        arrayCita[k] = auxiliar;
-                        j = j - 1;
+        if(numero == true){
+            while (jump > 0) {
+                for (i = jump; i < arrayCita.length; i++) {
+                    j = i - jump;
+                    while (j >= 0) {
+                        k = j + jump;
+                        if(interruptor == 0){
+                            if (arrayCita[j].getCodigoHist() <= arrayCita[k].getCodigoHist()) {
+                                j = -1;
+                            }
+                            else {
+                                auxiliar = arrayCita[j];
+                                arrayCita[j] = arrayCita[k];
+                                arrayCita[k] = auxiliar;
+                                j = j - 1;
+                            }
+                        } 
+                        if(interruptor == 1){
+                            if (arrayCita[j].getDNI() <= arrayCita[k].getDNI()) {
+                                j = -1;
+                            }
+                            else {
+                                auxiliar = arrayCita[j];
+                                arrayCita[j] = arrayCita[k];
+                                arrayCita[k] = auxiliar;
+                                j = j - 1;
+                            }
+                        }
+                        if(interruptor == 2){
+                            if (arrayCita[j].getPorPagar() <= arrayCita[k].getPorPagar()) {
+                                j = -1;
+                            }
+                            else {
+                                auxiliar = arrayCita[j];
+                                arrayCita[j] = arrayCita[k];
+                                arrayCita[k] = auxiliar;
+                                j = j - 1;
+                            }
+                        }
                     }
                 }
+                jump = jump / 2;
             }
-            jump = jump / 2;
+        }else{
+            if(interruptor == 3){
+            ordenaCadenas(arrayCita,interruptorCadenas);
         }
-        System.out.println("Ordeando por shell");
+        }
+ 
+
+        
         
         
         vaciarArchivo();
@@ -569,16 +693,7 @@ public class citaMain extends javax.swing.JFrame {
         /*showArray(array);*/
     }
 
-    public void vaciarArchivo(){
-        File archivo = new File("src/archivos/cita.txt");
-        try {
-            PrintWriter salida  = new PrintWriter(archivo);
-            salida.print("");
-            salida.close();
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace(System.out);
-        }
-    }
+    
     /**
      * @param args the command line arguments
      */
