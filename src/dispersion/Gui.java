@@ -5,6 +5,7 @@
  */
 package dispersion;
 
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import main.main;
 
@@ -14,12 +15,9 @@ import main.main;
  */
 public class Gui extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Gui
-     */
     public Gui() {
         initComponents();
-        
+                this.setLocationRelativeTo(null); 
                miUsuario.Insertar(15200198,"Sebastian.Baltazar");
                miUsuario.Insertar(17200284,"Gianela.Mallqui");
                miUsuario.Insertar(18200315,"Francis.Mori");
@@ -28,6 +26,55 @@ public class Gui extends javax.swing.JFrame {
                miUsuario.Insertar(18200112,"Jesus.Leon");
                miUsuario.Insertar(18200115,"Kioshi.Okamoto");
         
+    }
+    public void ingreso(){
+        String mensaje = " ";
+        boolean logeado = false, mostrar=true;
+
+        try {
+
+            if (jTextField4.getText() != null  ) {
+
+                String texto = jPasswordField1.getText();
+                cod  = Integer.parseInt(texto);
+                String textos = jTextField4.getText();
+
+                pos = miUsuario.Buscar(cod);
+
+                if (pos != -1 && textos.equals(miUsuario.getNombreDeUsuario(pos)) )
+                {
+                    mensaje+="\nUsuario correcto";
+                    logeado = true;
+                    mostrar = false;
+
+                }
+                else{
+                    mensaje="\n\nUsuario incorrecto";
+                    jTextField4.requestFocus();
+                    
+                }
+
+            } else {
+
+                mensaje = "Los datos no son validos";
+                jTextField4.requestFocus();
+            }
+
+        } catch (Exception e) {
+
+            mensaje = "Los datos no son validos";
+            jTextField4.requestFocus();
+        }
+        if(mostrar){
+            JOptionPane.showMessageDialog(null, mensaje);
+        }
+        
+        if(logeado){
+             main m = new main();
+             m.setVisible(true);
+             dispose();
+        
+        }
     }
 
     /**
@@ -71,9 +118,9 @@ public class Gui extends javax.swing.JFrame {
 
         jTextField4.setBackground(new java.awt.Color(102, 102, 102));
         jTextField4.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+        jTextField4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField4KeyPressed(evt);
             }
         });
 
@@ -94,11 +141,21 @@ public class Gui extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
+        jButton2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jButton2KeyPressed(evt);
+            }
+        });
 
         jPasswordField1.setBackground(new java.awt.Color(102, 102, 102));
         jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jPasswordField1ActionPerformed(evt);
+            }
+        });
+        jPasswordField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPasswordField1KeyPressed(evt);
             }
         });
 
@@ -243,56 +300,27 @@ public class Gui extends javax.swing.JFrame {
     }//GEN-LAST:event_jPasswordField1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String mensaje = " ";
-        boolean logeado = false, mostrar=true;
-
-        try {
-
-            if (jTextField4.getText() != null  ) {
-
-                String texto = jPasswordField1.getText();
-                cod  = Integer.parseInt(texto);
-                String textos = jTextField4.getText();
-
-                pos = miUsuario.Buscar(cod);
-
-                if (pos != -1 && textos.equals(miUsuario.getNombreDeUsuario(pos)) )
-                {
-                    mensaje+="\nUsuario correcto";
-                    logeado = true;
-                    mostrar = false;
-
-                }
-                else{
-                    mensaje="\n\nUsuario incorrecto";
-                    
-                }
-
-            } else {
-
-                mensaje = "Los datos no son validos";
-            }
-
-        } catch (Exception e) {
-
-            mensaje = "Los datos no son validos";
-        }
-        if(mostrar){
-            JOptionPane.showMessageDialog(null, mensaje);
-        }
-        
-        if(logeado){
-             main m = new main();
-             m.setVisible(true);
-             dispose();
-        
-        }
+        ingreso();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    private void jTextField4KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            jPasswordField1.requestFocus();
+        }
+    }//GEN-LAST:event_jTextField4KeyPressed
+
+    private void jPasswordField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField1KeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            jButton2.requestFocus();
+        }
+    }//GEN-LAST:event_jPasswordField1KeyPressed
+
+    private void jButton2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton2KeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+           ingreso();
+        }
+    }//GEN-LAST:event_jButton2KeyPressed
 Usuario miUsuario = new Usuario();
 
 /*int codigo[] = new int[5];;
