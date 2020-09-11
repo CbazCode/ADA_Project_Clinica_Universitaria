@@ -157,10 +157,6 @@ public class editaConsulta extends javax.swing.JDialog {
                 
         }
     }
-
-    
- 
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -448,7 +444,8 @@ public class editaConsulta extends javax.swing.JDialog {
     }//GEN-LAST:event_bGrabar1ActionPerformed
 
     private void bGrabar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bGrabar2ActionPerformed
-        // TODO add your handling code here:
+        modificar();
+        modificar1();
     }//GEN-LAST:event_bGrabar2ActionPerformed
 
     /**

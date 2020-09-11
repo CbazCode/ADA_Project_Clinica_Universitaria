@@ -41,7 +41,7 @@ public class nuevaConsulta extends javax.swing.JDialog {
             pw = new PrintWriter(fichero);
             
             pw.println(tCodigo.getText() + "  " + jSignos.getText()+ "  "+ jSintomas.getText()+
-                    "  "+ jResultados.getText()+ " "+ jDiagnostico.getText());
+                    "  "+ jResultados.getText()+ "  " + jDiagnostico.getText());
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -341,7 +341,7 @@ public class nuevaConsulta extends javax.swing.JDialog {
     }//GEN-LAST:event_bCancelarActionPerformed
 
     private void bRecetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRecetaActionPerformed
-        nuevaReceta nr = new nuevaReceta(new javax.swing.JFrame(),true);
+        recetaMain nr = new recetaMain ();
         nr.setVisible(true);
     }//GEN-LAST:event_bRecetaActionPerformed
 
@@ -357,7 +357,21 @@ public class nuevaConsulta extends javax.swing.JDialog {
     }//GEN-LAST:event_tCodigoKeyTyped
 
     private void bGrabar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bGrabar1ActionPerformed
-
+        if(!tCodigo.getText().isEmpty() &&
+           !jSignos.getText().isEmpty() && !jSintomas.getText().isEmpty() &&  
+           !jResultados.getText().isEmpty() &&  !jDiagnostico.getText().isEmpty()
+           ){
+           escribir();  
+            int mensaje = JOptionPane.showOptionDialog(null, "Se grabo correctamente", "Grabado", JOptionPane.DEFAULT_OPTION,
+                     JOptionPane.INFORMATION_MESSAGE, null, null, null);
+            if(mensaje == 0){
+                dispose();
+            }
+            
+        }else{
+            int mensaje = JOptionPane.showOptionDialog(null, "Error al grabar, falta completar datos", "ERROR", JOptionPane.DEFAULT_OPTION,
+                     JOptionPane.ERROR_MESSAGE, null, null, null);   
+        }
     }//GEN-LAST:event_bGrabar1ActionPerformed
 
     public static void main(String args[]) {
