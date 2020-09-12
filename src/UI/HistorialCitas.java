@@ -41,7 +41,6 @@ public class HistorialCitas extends javax.swing.JFrame {
     public void recibeDatos(int dni){
         
         dniUsuario = String.valueOf(dni);
-        System.out.println("KHEEEEE: "+dniUsuario);
     }
     public HistorialCitas() {
         initComponents();
@@ -111,13 +110,10 @@ public class HistorialCitas extends javax.swing.JFrame {
             for(int i = 0; i<linea.length;i++){
                 String[] row = linea[i].toString().split("  ");
                 String[] vaParaTabla = {row[0],row[2],row[3],row[4]};
-                System.out.println("esto es row: "+row[1]);
-                System.out.println("esto es dni: "+this.dniUsuario);
                 if(row[1].equals(this.dniUsuario) ){
-                    System.out.println("Entrooo");
                     modelo1.addRow(vaParaTabla); 
                 }             
-                System.out.println("goo: "+ linea[i]);
+
             }
             
            } catch (Exception e) {
@@ -150,7 +146,7 @@ public class HistorialCitas extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
-        ButonSalir.setText("Safari");
+        ButonSalir.setText("Salir");
         ButonSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ButonSalirActionPerformed(evt);

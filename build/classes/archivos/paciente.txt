@@ -1,6 +1,6 @@
-72179861  Leon  Ortiz  Diego  Casado  Masculino  13/02/2000  959837200  No tengo  Me pica la panza
+72179861  Leon  Ortiz  Enrique  Soltero  Masculino  13/02/2000  959837200  No tengo  Me pica el dedo
 72179862  Leon  Ortiz  Angie  Soltero  Femenino  22/08/2020  99999333  No tengo  Dolor de dedo
-72179861  Leon  Ortiz  Diego  Soltero  Masculino  13/02/2000  959837200  No tengo  Me pica el dedo
-72179861  Leon  Ortiz  Diego  Soltero  Masculino  13/02/2000  959837200  No tengo  Me pica el dedo
-73016832  Asis  Romero  Sebastian  Soltero  Masculino  16/09/2000  975690499  Tengo  *Primer
-*segundo
+72179861  Leon  Ortiz  Enrique  Soltero  Masculino  13/02/2000  959837200  No tengo  Me pica el dedo
+72179861  Leon  Ortiz  Enrique  Soltero  Masculino  13/02/2000  959837200  No tengo  Me pica el dedo
+73016832  Asis  Romero  Alexander  Soltero  Masculino  16/09/2000  975690499  Tengo  *Primer *segundo
+16005555  Lopez  Paucar  Fabiana  Casado  Femenino  05/09/2020  975690499  Tengo  *Primer *segundo
