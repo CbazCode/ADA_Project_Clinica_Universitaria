@@ -40,8 +40,8 @@ public class nuevaConsulta extends javax.swing.JDialog {
             fichero = new FileWriter(file.getAbsoluteFile(), true);
             pw = new PrintWriter(fichero);
             
-            pw.println(tCodigo.getText() + "  " + jSignos.getText()+ "  "+ jSintomas.getText()+
-                    "  "+ jResultados.getText()+ "  " + jDiagnostico.getText());
+            pw.println(tCodigo.getText() + "  " + jSignos.getText().trim().replaceAll("\\s{1,10}"," " )+ "  "+ jSintomas.getText().trim().replaceAll("\\s{1,10}"," " )+
+                    "  "+ jResultados.getText().trim().replaceAll("\\s{1,10}"," " )+ "  " + jDiagnostico.getText().trim().replaceAll("\\s{1,10}"," " ));
             
         } catch (Exception e) {
             e.printStackTrace();

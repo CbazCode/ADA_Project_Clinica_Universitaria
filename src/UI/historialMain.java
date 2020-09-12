@@ -426,7 +426,25 @@ public final class historialMain extends javax.swing.JFrame {
     }//GEN-LAST:event_ButtonConsultasActionPerformed
 
     private void ButtonCitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonCitasActionPerformed
-        hcita.setVisible(true);
+        //hcita.setVisible(true);
+        int filaseleccionada;
+        try{
+            filaseleccionada= tablaTest1.getSelectedRow();
+            if (filaseleccionada==-1){
+                JOptionPane.showMessageDialog(null, "No se ha seleccionado ninguna fila");
+            }
+            else{
+                
+   
+                int dniUsuario = Integer.parseInt((String) tablaTest1.getValueAt(filaseleccionada, 0));           
+                hcita.recibeDatos(dniUsuario);
+                hcita.leerArchivo();
+                hcita.setVisible(true);
+                
+            }
+        }catch(Exception ex){
+            System.err.println("El error es " + ex);
+        }
     }//GEN-LAST:event_ButtonCitasActionPerformed
 
     private void bSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSalirActionPerformed
@@ -435,7 +453,7 @@ public final class historialMain extends javax.swing.JFrame {
 
     private void tablaTest1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaTest1MouseClicked
         int seleccionar= tablaTest1.rowAtPoint(evt.getPoint());
-        hcita.leerArchivo(String.valueOf(tablaTest1.getValueAt(seleccionar, 0)));
+        //hcita.leerArchivo(String.valueOf(tablaTest1.getValueAt(seleccionar, 0)));
         ButtonConsultas.setEnabled(true);
         ButtonCitas.setEnabled(true);        
     }//GEN-LAST:event_tablaTest1MouseClicked

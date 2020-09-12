@@ -45,7 +45,9 @@ public class nuevoPaciente extends javax.swing.JDialog {
             +jComboGenero.getSelectedItem()+ "  "
             +date+"  "+tTelefono.getText()+ "  "
             +jComboSeguro.getSelectedItem()+ "  "
-            +jTextArea1.getText().trim().replaceAll("\\s{2,}", " "));
+            //------------------------------------------------------------MODIFICADO-------------------------------------------------------------------------------
+            +jTextArea1.getText().trim().replaceAll("\\s{1,10}", " "));
+            //------------------------------------------------------------MODIFICADO-------------------------------------------------------------------------------
              //trim elimina los espacios en blanco del principio y final            
              //replaceAll basta que haya mas de 2 espacios(barra espaciadora) pues lo vuelve un solo espacio ese texto
             

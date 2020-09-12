@@ -155,7 +155,7 @@ public class editaMedico extends javax.swing.JDialog {
             fileAntiguo.delete();
             //fileAntiguo.renameTo(fileNuevo);
             
-            fileNuevo.delete();
+            //fileNuevo.delete();
             
             
             

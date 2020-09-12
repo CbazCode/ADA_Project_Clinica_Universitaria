@@ -18,7 +18,9 @@ public class editaPaciente extends javax.swing.JDialog {
     int DniAnterior;
     private LineBorder border = new LineBorder((new Color(107, 179, 35)),5);
     int xx,xy;
-    
+    public ArrayList<String> nombre = new ArrayList<String>();
+    public ArrayList<String> apellidoP = new ArrayList<String>();
+    public ArrayList<String> apellidoM = new ArrayList<String>();
     public editaPaciente(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -26,6 +28,9 @@ public class editaPaciente extends javax.swing.JDialog {
         jTextArea1.setWrapStyleWord(true);//no recorta las palabras dentro del jTextArea1
         this.setLocationRelativeTo(null); 
         this.getRootPane().setBorder(border);
+        nombre.add(" ");
+        apellidoP.add(" ");
+        apellidoM.add(" ");
     }
     int indexEstadoCivilPaciente(String texto){
         int index=0;
@@ -77,7 +82,9 @@ public class editaPaciente extends javax.swing.JDialog {
         jComboGenero.setSelectedIndex(indexGeneroPaciente(paciente.getGenero()));
         jDateChooser1.setDate(ParseFecha(paciente.getFecha()));
         jComboSeguro.setSelectedIndex(indexSeguroPaciente(paciente.getSeguro()));
-        jTextArea1.setText(paciente.getProblemasMedicos());
+        //------------------------------------------------------------MODIFICADO-------------------------------------------------------------------------------
+       jTextArea1.setText(paciente.getProblemasMedicos().trim().replaceAll("\\s[*]","\n *"));
+       //------------------------------------------------------------MODIFICADO-------------------------------------------------------------------------------
         
     }
     
@@ -110,7 +117,9 @@ public class editaPaciente extends javax.swing.JDialog {
                         +jComboGenero.getSelectedItem()+ "  "
                         +date+"  "+tTelefono.getText()+ "  "
                         +jComboSeguro.getSelectedItem()+ "  "
-                        +jTextArea1.getText().trim().replaceAll("\\s{2,}", " ")
+                        //------------------------------------------------------------MODIFICADO-------------------------------------------------------------------------------
+                        +jTextArea1.getText().trim().replaceAll("\\s{1,10}", " ")
+                        //------------------------------------------------------------MODIFICADO-------------------------------------------------------------------------------
                         );
                     }else{
                         pw.println(linea[i]);
@@ -181,7 +190,7 @@ public class editaPaciente extends javax.swing.JDialog {
             fileAntiguo.delete();
             //fileAntiguo.renameTo(fileNuevo);
             
-            fileNuevo.delete();
+            //fileNuevo.delete();
             
             
             
@@ -297,15 +306,33 @@ public class editaPaciente extends javax.swing.JDialog {
 
         jLabel6.setText("Teléfono:");
 
+        tDNI.setEnabled(false);
         tDNI.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 tDNIKeyTyped(evt);
             }
         });
 
+        tNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tNombreKeyTyped(evt);
+            }
+        });
+
         tApellidoP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tApellidoPActionPerformed(evt);
+            }
+        });
+        tApellidoP.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tApellidoPKeyTyped(evt);
+            }
+        });
+
+        tApellidoM.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tApellidoMKeyTyped(evt);
             }
         });
 
@@ -439,15 +466,11 @@ public class editaPaciente extends javax.swing.JDialog {
                         .addComponent(jComboGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(29, 29, 29)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jLabel12))
+                    .addComponent(jLabel12)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboSeguro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel13)))))
+                        .addComponent(jComboSeguro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel13)))
                 .addGap(38, 38, 38)
                 .addComponent(jLabel14)
                 .addGap(18, 18, 18)
@@ -573,6 +596,51 @@ public class editaPaciente extends javax.swing.JDialog {
         }
 
     }//GEN-LAST:event_tDNIKeyTyped
+    int contadorNombre = 1;
+    private void tNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tNombreKeyTyped
+        // TODO add your handling code here:
+        nombre.add(String.valueOf(evt.getKeyChar()));
+        if (tNombre.getText().length()== 30) {
+            evt.consume();
+        }
+        if (tNombre.getText().length()== 30) {
+            evt.consume();
+        }
+        if(evt.getKeyChar()== ' ' && nombre.get(contadorNombre-1).equals(" ")){
+            evt.consume();
+        }
+        contadorNombre++; 
+    }//GEN-LAST:event_tNombreKeyTyped
+    int contadorApellidoP=1;
+    private void tApellidoPKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tApellidoPKeyTyped
+        // TODO add your handling code here:
+        apellidoP.add(String.valueOf(evt.getKeyChar()));
+        if (tApellidoP.getText().length()== 30) {
+            evt.consume();
+        }
+        if (tApellidoP.getText().length()== 30) {
+            evt.consume();
+        }
+        if(evt.getKeyChar()== ' ' && apellidoP.get(contadorApellidoP-1).equals(" ")){
+            evt.consume();
+        }
+        contadorApellidoP++;
+    }//GEN-LAST:event_tApellidoPKeyTyped
+    int contadorApellidoM = 1;
+    private void tApellidoMKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tApellidoMKeyTyped
+        // TODO add your handling code here:
+        apellidoM.add(String.valueOf(evt.getKeyChar()));
+        if (tApellidoM.getText().length()== 30) {
+            evt.consume();
+        }
+        if (tApellidoM.getText().length()== 30) {
+            evt.consume();
+        }
+        if(evt.getKeyChar()== ' ' && apellidoM.get(contadorApellidoM-1).equals(" ")){
+            evt.consume();
+        }
+        contadorApellidoM++;
+    }//GEN-LAST:event_tApellidoMKeyTyped
 
     /**
      * @param args the command line arguments

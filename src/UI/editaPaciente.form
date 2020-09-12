@@ -263,18 +263,28 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="tDNI">
+          <Properties>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
           <Events>
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tDNIKeyTyped"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="tNombre">
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tNombreKeyTyped"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="tApellidoP">
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tApellidoPActionPerformed"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tApellidoPKeyTyped"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="tApellidoM">
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tApellidoMKeyTyped"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="tTelefono">
           <Events>

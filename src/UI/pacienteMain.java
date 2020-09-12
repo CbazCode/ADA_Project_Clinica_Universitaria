@@ -6,7 +6,6 @@
 package UI;
 
 import Clases.Paciente;
-import static com.sun.xml.internal.fastinfoset.alphabet.BuiltInRestrictedAlphabets.table;
 
 import java.awt.*;
 import java.awt.event.KeyAdapter;

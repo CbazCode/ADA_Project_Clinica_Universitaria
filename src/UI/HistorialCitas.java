@@ -27,7 +27,7 @@ import javax.swing.table.TableColumnModel;
  * @author param
  */
 public class HistorialCitas extends javax.swing.JFrame {
-
+    private String dniUsuario;
     private final LineBorder border = new LineBorder((new Color(107, 179, 35)), 5);
     int xx, xy;
     /**
@@ -38,12 +38,17 @@ public class HistorialCitas extends javax.swing.JFrame {
             return false;
         }
     };
-    
+    public void recibeDatos(int dni){
+        
+        dniUsuario = String.valueOf(dni);
+        System.out.println("KHEEEEE: "+dniUsuario);
+    }
     public HistorialCitas() {
         initComponents();
         this.setLocationRelativeTo(null);
         this.getRootPane().setBorder(border);
         completarTabla();
+        completarDatos1();
     }
     
 
@@ -82,28 +87,40 @@ public class HistorialCitas extends javax.swing.JFrame {
         header1.setDefaultRenderer(new HistorialCitas.HeaderRenderer(tablaCita));
         tablaCita.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         modelo1.setRowCount(0);
+        modelo1.setRowCount(0);
+        completarDatos1();
+    }
+    public void completarDatos1(){
+        modelo1.setRowCount(0);
+        leerArchivo();
     }
 
-    protected void leerArchivo(String id) {
+   public void leerArchivo() {
+        modelo1.setRowCount(0);
         File file;
         FileReader fr = null;
-        BufferedReader br;
+        BufferedReader br = null;
         file = new File("src/archivos/cita.txt");
         if (!file.exists()) {
             JOptionPane.showMessageDialog(null, "El archivo no Existe");
         } else {
             try {
-                fr = new FileReader(file);
-                br = new BufferedReader(fr);
-                Object[] lineaf = br.lines().toArray();
-                for (Object linea1 : lineaf) {
-                    int ini = linea1.toString().indexOf(" ");
-                    if (id.equals(linea1.toString().substring(0, ini))) {
-                        String[] row = linea1.toString().substring(ini+2).split("  "); 
-                        modelo1.addRow(row);
-                    }
-                }
-            } catch (FileNotFoundException e) {
+             fr = new FileReader(file);
+             br = new BufferedReader(fr);
+            Object[] linea = br.lines().toArray();
+            for(int i = 0; i<linea.length;i++){
+                String[] row = linea[i].toString().split("  ");
+                String[] vaParaTabla = {row[0],row[2],row[3],row[4]};
+                System.out.println("esto es row: "+row[1]);
+                System.out.println("esto es dni: "+this.dniUsuario);
+                if(row[1].equals(this.dniUsuario) ){
+                    System.out.println("Entrooo");
+                    modelo1.addRow(vaParaTabla); 
+                }             
+                System.out.println("goo: "+ linea[i]);
+            }
+            
+           } catch (Exception e) {
                 System.out.println("Error: " + e);
             } finally {
                 try {

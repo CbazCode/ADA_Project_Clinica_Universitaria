@@ -6,6 +6,7 @@
 package main;
 
 import UI.citaMain;
+import UI.consultaMain;
 import UI.historialMain;
 import UI.medicoMain;
 import UI.nuevaConsulta;
@@ -399,8 +400,8 @@ public class main extends javax.swing.JFrame {
     }//GEN-LAST:event_bHistorialActionPerformed
 
     private void bConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bConsultaActionPerformed
-        nuevaConsulta nc = new nuevaConsulta();
-        nc.setVisible(true);
+        consultaMain cm = new consultaMain();
+        cm.setVisible(true);
     }//GEN-LAST:event_bConsultaActionPerformed
 
     /**
