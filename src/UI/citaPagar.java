@@ -7,6 +7,7 @@ package UI;
 
 import Clases.Cita;
 import Clases.Medico;
+import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
 import java.awt.*;
@@ -19,25 +20,33 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.JSpinner.DefaultEditor;
+import javax.swing.text.JTextComponent;
 
 /**
  *
  * @author Kioshi
  */
-public class editaCita extends javax.swing.JDialog {
+public class citaPagar extends javax.swing.JDialog  {
     private LineBorder border = new LineBorder((new Color(107, 179, 35)),5);
     int xx,xy;
     /**
      * Creates new form nuevoMedico
      */
     int CodigoAnterior;
-    String horaArchivo = "";
+    String horaArchivo ="";
     String fechaArchivo ="";
     Date horaCita;
     float porPagar;
+    
+    float dinerorecibido;
+    float deudaMonto;
+    
+    float diferenciaDePago;
+    float diferenciaDePagoB;
+    
     DateFormat hourFormat = new SimpleDateFormat("HH:mm");
        
-    public editaCita(java.awt.Frame parent, boolean modal) {
+    public citaPagar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         SpinnerNumberModel nmh = new SpinnerNumberModel();
@@ -55,58 +64,21 @@ public class editaCita extends javax.swing.JDialog {
     }
     public void recibeDatos(Cita cita){
         CodigoAnterior = cita.getCodigoHist();
-        tCodigo.setText(String.valueOf(cita.getCodigoHist()));
-        tDni.setText(String.valueOf(cita.getDNI()));
-        tEspecialidad.setText(cita.getEspecialidad());
+        jCodigo.setText(String.valueOf(cita.getCodigoHist()));
+        jDni.setText(String.valueOf(cita.getDNI()));
+        jEspecialidad1.setText(cita.getEspecialidad());
         jFecha.setDate(ParseFecha(cita.getFechaCita()));
         String[] horaMinuto = cita.getHoraCita().split(":");
         jSpinnerHora.setValue(Integer.parseInt(horaMinuto[0]));
         jSpinnerMinutos.setValue(Integer.parseInt(horaMinuto[1]));
         porPagar=cita.getPorPagar();
+        jDeuda1.setText(String.valueOf(cita.getPorPagar()));
         tporPagar.setText(String.valueOf(cita.getPorPagar()));
+         
+        String texto1 = tporPagar.getText();
+        deudaMonto = Float.parseFloat(texto1);
     }
-    
-    public boolean validado(){
-        long spinnerHoraLong, spinnerMinutosLong;
-        int spinnerHoraInt, spinnerMinutosInt;
-        boolean aprobado = true;     
-        spinnerHoraInt = Integer.parseInt(jSpinnerHora.getValue().toString());
-        spinnerMinutosInt = Integer.parseInt(jSpinnerMinutos.getValue().toString());
-        spinnerHoraLong = Long.parseLong(jSpinnerHora.getValue().toString());
-        spinnerMinutosLong = Long.parseLong(jSpinnerMinutos.getValue().toString());
-        if((spinnerHoraInt>24 || spinnerHoraInt <0) || (spinnerMinutosInt>60 || spinnerMinutosInt<0)){
-            JOptionPane.showOptionDialog(null, "Error en el ingreso de hora y minutos, verifique campos", "ERROR", JOptionPane.DEFAULT_OPTION,
-                     JOptionPane.ERROR_MESSAGE, null, null, null); 
-            aprobado = false;   
-        }else{
-            horaCita=new Date(2020,01,01,0,0);
-            long hora = horaCita.getTime()+ spinnerHoraLong*60*60*1000+ spinnerMinutosLong*60*1000;
-            horaCita.setTime(hora);
-            horaArchivo= hourFormat.format(horaCita);  
-            fechaArchivo = ((JTextField)jFecha.getDateEditor().getUiComponent()).getText();        
-                if(!existeEspecialidad()){
-                    aprobado = false;
-                    JOptionPane.showOptionDialog(null, "La especialidad no existe", "ERROR", JOptionPane.DEFAULT_OPTION,JOptionPane.ERROR_MESSAGE, null, null, null);
-                }else{
-                    if(!doctorDisponible()){
-                        aprobado = false;
-                        JOptionPane.showOptionDialog(null, "Doctor no se encuentra disponible en el horario elegido", "ERROR", JOptionPane.DEFAULT_OPTION,JOptionPane.ERROR_MESSAGE, null, null, null);
-                    }else{
-                        if(!existePaciente()){
-                            aprobado = false;
-                            JOptionPane.showOptionDialog(null, "Paciente no existe", "ERROR", JOptionPane.DEFAULT_OPTION,JOptionPane.ERROR_MESSAGE, null, null, null);
-                        }
-                    }
-                }      
-        }
-        if(aprobado){
-            return true;
-        }else{
-            return false;
-        }
-        
-    }
-    
+      
     public static Date ParseFecha(String fecha)
     {
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
@@ -133,7 +105,7 @@ public class editaCita extends javax.swing.JDialog {
            Object[] linea = br.lines().toArray();
            for(int i = 0; i<linea.length;i++){
                String[] row = linea[i].toString().split("  ");
-               if(row[7].equals(tEspecialidad.getText()) ){
+               if(row[7].equals(jEspecialidad1.getText()) ){
                    flag = true;
                    break;  
                }else{
@@ -162,7 +134,7 @@ public class editaCita extends javax.swing.JDialog {
            Object[] linea = br.lines().toArray();
            for(int i = 0; i<linea.length;i++){
                String[] row = linea[i].toString().split("  ");
-               if(row[0].equals(tDni.getText()) ){
+               if(row[0].equals(jDni.getText()) ){
                    flag = true;
                    break;  
                }else{
@@ -193,7 +165,7 @@ public class editaCita extends javax.swing.JDialog {
            Object[] linea = br.lines().toArray();
            for(int i = 0; i<linea.length;i++){
                String[] row = linea[i].toString().split("  ");
-               if(row[2].equals(tEspecialidad.getText()) ){
+               if(row[2].equals(jEspecialidad1.getText()) ){
                    if(row[4].equals(horaArchivo)){
                        flag = false;
                        break; 
@@ -217,59 +189,98 @@ public class editaCita extends javax.swing.JDialog {
     }
     
     public void modificar(){
-        
         File fileNuevo = new File("src/archivos/citastemp.txt");
         File fileAntiguo = new File("src/archivos/cita.txt");
-        
-        
-        BufferedReader br;
-   
-        FileWriter fichero = null;
-        PrintWriter pw = null;
-
-        
-        try{
-            fichero = new FileWriter(fileNuevo.getAbsoluteFile(), true);
-            pw = new PrintWriter(fichero);
-            FileReader fr =new FileReader(fileAntiguo);
-            br = new BufferedReader(fr);
-            if(fileAntiguo.exists()){
-                Object[] linea = br.lines().toArray();
-                for(int i = 0; i<linea.length;i++){
-                    String[] row = linea[i].toString().split("  ");
-                    if(row[0].equals(String.valueOf(CodigoAnterior))){
-                             pw.println(tCodigo.getText() + "  " + tDni.getText()+ "  "+ tEspecialidad.getText()+"  "+fechaArchivo+"  "+horaArchivo+"  "+tporPagar.getText());  
-                    }else{
-                        pw.println(linea[i]);
-                    }
-                }  
-                
-                fr.close();
-                br.close();
-            } 
+        String mensaje = " ";
+        String texto = tporPagar.getText();
+        dinerorecibido = Float.parseFloat(texto);
+        diferenciaDePago = dinerorecibido -deudaMonto;
+            if(deudaMonto!=0){
+                if(diferenciaDePago<0 && deudaMonto!=0){
+                    diferenciaDePago=diferenciaDePago*(-1);
+                    tporPagar.setText(String.valueOf(diferenciaDePago));
+                }else{
+                    diferenciaDePagoB=0;
+                    tporPagar.setText(String.valueOf(diferenciaDePagoB));
+                }
+            }else{
+                tporPagar.setText(String.valueOf(deudaMonto));
+                diferenciaDePago=0;
+            }
             
-            pw.close();
-            fichero.close(); 
-            fileAntiguo.delete();    
-             
-        }catch(Exception e){
-            System.out.println("ERROR EN MODIFICAR DE EDITAR CITA");
-                e.printStackTrace();
-        }finally{
-            try {
-              if (null != fichero){  
-                pw.close();
-                fichero.close(); 
-                
-              }
-                  
-            } catch (Exception e2) {
-                System.out.println("ERROR EN MODIFICAR DE EDITAR CITA");
-                   e2.printStackTrace();
-             }
-            dispose();
-                
-        }
+
+           BufferedReader br;
+
+           FileWriter fichero = null;
+           PrintWriter pw = null;
+
+
+           try{
+               fichero = new FileWriter(fileNuevo.getAbsoluteFile(), true);
+               pw = new PrintWriter(fichero);
+               FileReader fr =new FileReader(fileAntiguo);
+               br = new BufferedReader(fr);    
+               if(fileAntiguo.exists()){
+
+                   if(diferenciaDePago==0){
+                       mensaje = "No necesita vuelto";
+                       
+                   }else{
+                       int c[] = {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5};
+                       int s[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+                       double v[] = {200, 100, 50, 20, 10, 5, 2, 1, 0.5, 0.2, 0.1, 0.05, 0.01};
+
+                       Cita moneda = new Cita();
+
+                       moneda.Voraz(s, v, diferenciaDePago, c);
+                       if (moneda.Solucion(s, v, diferenciaDePago, c)) {
+                           for (int i = s.length - 1; i >= 0; i--) {
+                               if (s[i] > 0) {
+                                   mensaje = s[i] + " monedas de " + v[i] + " soles\n" + mensaje;
+                               }
+                           }
+
+                       } else{
+                           mensaje = "No hay saldo disponible en el cajero";
+                       }
+                   }
+                   JOptionPane.showMessageDialog(null, mensaje,"Cambio Pago-Cita",JOptionPane.INFORMATION_MESSAGE); 
+                   Object[] linea = br.lines().toArray();
+                   for(int i = 0; i<linea.length;i++){
+                       String[] row = linea[i].toString().split("  ");
+                       if(row[0].equals(String.valueOf(CodigoAnterior))){
+                           pw.println(row[0]+"  "+row[1]+"  "+row[2]+"  "+row[3]+"  "+row[4]+"  "+tporPagar.getText());  
+                       }else{
+                           pw.println(linea[i]);
+                       }
+                   }  
+                   fr.close();
+                   br.close();   
+
+               }
+               pw.close();
+               fichero.close(); 
+               fileAntiguo.delete();  
+           }catch(Exception e){
+               System.out.println("ERROR EN MODIFICAR DE PAGAR CITA");
+                   e.printStackTrace();
+           }finally{
+               try {
+                 if (null != fichero){  
+                   pw.close();
+                   fichero.close(); 
+
+                 }
+
+               } catch (Exception e2) {
+                   System.out.println("ERROR EN MODIFICAR DE PAGAR CITA");
+                      e2.printStackTrace();
+                }
+               dispose();
+
+           }   
+        
+        
     }
     
     
@@ -306,12 +317,10 @@ public class editaCita extends javax.swing.JDialog {
             //fileAntiguo.renameTo(fileNuevo);
             
             //fileNuevo.delete();
-            
-            
-            
+           
              
         }catch(Exception e){
-            System.out.println("ERROR EN MODIFICAR 1 DE EDITAR CITA");
+            System.out.println("ERROR EN MODIFICAR 1 DE PAGAR CITA");
                 e.printStackTrace();
         }finally{
             try {
@@ -322,7 +331,7 @@ public class editaCita extends javax.swing.JDialog {
               }
                   
             } catch (Exception e2) {
-                 System.out.println("ERROR EN MODIFICAR 1 DE EDITAR CITA");
+                 System.out.println("ERROR EN MODIFICAR 1 DE PAGAR CITA");
                    e2.printStackTrace();
              }
             dispose();
@@ -331,8 +340,6 @@ public class editaCita extends javax.swing.JDialog {
     }
 
     
- 
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -348,20 +355,24 @@ public class editaCita extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        tCodigo = new javax.swing.JTextField();
-        tDni = new javax.swing.JTextField();
-        tEspecialidad = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         bGrabar = new javax.swing.JButton();
         bCancelar = new javax.swing.JButton();
-        jSpinnerHora = new javax.swing.JSpinner();
-        jSpinnerMinutos = new javax.swing.JSpinner();
         jLabel10 = new javax.swing.JLabel();
         jFecha = new com.toedter.calendar.JDateChooser();
         jLabel7 = new javax.swing.JLabel();
+        jSpinnerMinutos = new javax.swing.JSpinner();
+        jLabel8 = new javax.swing.JLabel();
         tporPagar = new javax.swing.JTextField();
+        jCodigo = new javax.swing.JLabel();
+        jDni = new javax.swing.JLabel();
+        jEspecialidad = new javax.swing.JLabel();
+        jDeuda = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jSpinnerHora = new javax.swing.JSpinner();
+        jEspecialidad1 = new javax.swing.JLabel();
+        jDeuda1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -382,7 +393,7 @@ public class editaCita extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Registro de Médico");
+        jLabel1.setText("Registro de Pago");
 
         jPanel2.setBackground(new java.awt.Color(239, 251, 239));
 
@@ -392,32 +403,7 @@ public class editaCita extends javax.swing.JDialog {
 
         jLabel4.setText("Fecha: ");
 
-        jLabel5.setText("Hora:");
-
         jLabel6.setText("Especialidad: ");
-
-        tCodigo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tCodigoActionPerformed(evt);
-            }
-        });
-        tCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                tCodigoKeyTyped(evt);
-            }
-        });
-
-        tDni.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                tDniKeyTyped(evt);
-            }
-        });
-
-        tEspecialidad.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                tEspecialidadKeyTyped(evt);
-            }
-        });
 
         jPanel4.setBackground(new java.awt.Color(239, 251, 239));
 
@@ -429,10 +415,10 @@ public class editaCita extends javax.swing.JDialog {
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 79, Short.MAX_VALUE)
+            .addGap(0, 94, Short.MAX_VALUE)
         );
 
-        bGrabar.setText("Grabar");
+        bGrabar.setText("Pagar");
         bGrabar.setMaximumSize(new java.awt.Dimension(100, 30));
         bGrabar.setMinimumSize(new java.awt.Dimension(100, 30));
         bGrabar.setPreferredSize(new java.awt.Dimension(100, 30));
@@ -454,112 +440,128 @@ public class editaCita extends javax.swing.JDialog {
 
         jLabel10.setText(":");
 
-        jLabel7.setText("Por Pagar:");
+        jLabel7.setText("Monto de la deuda:");
+
+        jLabel8.setText("Monto recibido:");
 
         tporPagar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tporPagarActionPerformed(evt);
             }
         });
-        tporPagar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                tporPagarKeyTyped(evt);
-            }
-        });
+
+        jLabel5.setText("Hora:");
+
+        jEspecialidad1.setText("jLabel9");
+
+        jDeuda1.setText("jLabel9");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bGrabar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43)
+                .addGap(132, 132, 132)
                 .addComponent(bCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(137, 137, 137))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(139, 139, 139))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(tCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(tEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(tDni, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(50, 50, 50)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5))
+                .addGap(35, 35, 35)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jCodigo)
+                            .addComponent(jDni)
+                            .addComponent(jEspecialidad)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jSpinnerHora, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jSpinnerMinutos, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(11, 11, 11)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(104, 104, 104)
-                                .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(20, 20, 20)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel8))
+                                .addGap(45, 45, 45)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jDeuda1)
+                                        .addGap(97, 97, 97)
+                                        .addComponent(jDeuda))
+                                    .addComponent(tporPagar, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(128, 128, 128)
-                                .addComponent(jSpinnerMinutos, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(199, 199, 199)
+                                .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSpinnerHora, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(tporPagar)
-                                .addComponent(jFecha, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)))
-                        .addContainerGap())))
+                        .addComponent(jEspecialidad1)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(27, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel7)
-                    .addComponent(tporPagar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(16, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(19, 19, 19)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel6)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(tDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel3)
-                                            .addComponent(jFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel4))
-                                        .addGap(22, 22, 22)
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(tEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel5)
-                                            .addComponent(jSpinnerHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jSpinnerMinutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addComponent(jCodigo)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel7)
+                                .addComponent(jDeuda)
+                                .addComponent(jDeuda1)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addGap(12, 12, 12)
+                                .addGap(60, 60, 60)
                                 .addComponent(jLabel10)
-                                .addGap(35, 35, 35)))
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(56, 56, 56))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(88, 88, 88))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addGap(48, 48, 48)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel8)
+                                    .addComponent(tporPagar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jDni)
+                                    .addComponent(jLabel3))
+                                .addGap(55, 55, 55)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jEspecialidad1))
+                                .addGap(18, 18, 18)
+                                .addComponent(jEspecialidad)
+                                .addGap(21, 21, 21)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel4))
+                                .addGap(42, 42, 42)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jSpinnerHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jSpinnerMinutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(bGrabar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(bCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(47, 47, 47))))
+                            .addComponent(bCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -577,7 +579,7 @@ public class editaCita extends javax.swing.JDialog {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -588,7 +590,9 @@ public class editaCita extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -610,49 +614,13 @@ public class editaCita extends javax.swing.JDialog {
     }//GEN-LAST:event_bCancelarActionPerformed
 
     private void bGrabarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bGrabarActionPerformed
-        if(validado()){
             modificar();
-            modificar1();
-        }else{
-            System.out.println("cita no valida");
-        }
-        
+            modificar1();   
     }//GEN-LAST:event_bGrabarActionPerformed
-
-    private void tCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tCodigoKeyTyped
-        if (tCodigo.getText().length()== 8) {
-            evt.consume(); 
-        } 
-        if(evt.getKeyChar()<'0' || evt.getKeyChar()>'9' && evt.getKeyChar()!='\b'){
-            evt.consume();
-        }
-        
-    }//GEN-LAST:event_tCodigoKeyTyped
-
-    private void tEspecialidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tEspecialidadKeyTyped
-       
-    }//GEN-LAST:event_tEspecialidadKeyTyped
-
-    private void tDniKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tDniKeyTyped
-        if (tDni.getText().length()== 9) {
-            evt.consume(); 
-        }
-        if(evt.getKeyChar()<'0' || evt.getKeyChar()>'9' && evt.getKeyChar()!='\b'){
-            evt.consume();
-        }       
-    }//GEN-LAST:event_tDniKeyTyped
-
-    private void tCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tCodigoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tCodigoActionPerformed
 
     private void tporPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tporPagarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tporPagarActionPerformed
-
-    private void tporPagarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tporPagarKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tporPagarKeyTyped
 
     /**
      * @param args the command line arguments
@@ -671,14 +639,26 @@ public class editaCita extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(editaCita.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(citaPagar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(editaCita.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(citaPagar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(editaCita.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(citaPagar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(editaCita.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(citaPagar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -687,7 +667,7 @@ public class editaCita extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                editaCita dialog = new editaCita(new javax.swing.JFrame(), true);
+                citaPagar dialog = new citaPagar(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -702,6 +682,12 @@ public class editaCita extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bCancelar;
     private javax.swing.JButton bGrabar;
+    private javax.swing.JLabel jCodigo;
+    private javax.swing.JLabel jDeuda;
+    private javax.swing.JLabel jDeuda1;
+    private javax.swing.JLabel jDni;
+    private javax.swing.JLabel jEspecialidad;
+    private javax.swing.JLabel jEspecialidad1;
     private com.toedter.calendar.JDateChooser jFecha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -711,14 +697,12 @@ public class editaCita extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JSpinner jSpinnerHora;
     private javax.swing.JSpinner jSpinnerMinutos;
-    private javax.swing.JTextField tCodigo;
-    private javax.swing.JTextField tDni;
-    private javax.swing.JTextField tEspecialidad;
     private javax.swing.JTextField tporPagar;
     // End of variables declaration//GEN-END:variables
 }

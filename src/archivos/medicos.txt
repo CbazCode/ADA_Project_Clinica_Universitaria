@@ -1,1 +1,3 @@
-15995887  Julio  Leon  Chavez  999999999  leonidas@gmail.com  UNI XD  Urologia
+15995887  Julio  Leon  Chavez  999999999  leonidas@gmail.com  UNI  Odontopediatría
+72179822  Sebastian  Mori  Leon  987654321  sebas.ml@gmail.com  Ricardo Palma  Endodoncia
+1234567  Emilio  Fuentes  Paler  999999999  emi.paler@gmail.com  Ricardo Palma  Ortodoncia

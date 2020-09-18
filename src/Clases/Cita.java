@@ -31,6 +31,10 @@ public class Cita {
         this.porPagar=porPagar;
 
     }
+    //Leonidas Leon
+    public Cita(float porPagar){
+        this.porPagar = porPagar;    
+    }
 
      /*----------------------------------------Getters and Setters--------------------------------------*/
     public String getFechaCita() {
@@ -87,6 +91,68 @@ public class Cita {
         return codigoHist + "  " + DNI + "  "+Especialidad + "  " + fechaCita + "  "+horaCita +"  "+ porPagar;
     }
 
+    
+    public void Voraz(int s[], double v[], double cambio, int c[]) {
 
+        double x;
+        //  int cont=0;
+        int i = 0;
+        while (!Solucion(s, v, cambio, c) && i < s.length) {
+//Seleccionar moneda
+            x = v[i];
+            if (Factible(s, v, cambio, x, c)) //inserta moneda
+            {
+                if (c[i] != 0) {
+                    s[i]++;
+                    c[i]--;
+                }
+                else i++;
+
+            } else //rechaza moneda
+            {
+                i++;
+            }
+        }
+
+    }
+
+    public boolean Solucion(int s[], double v[], double cambio, int c[]) {
+        double suma = 0.0;
+        for (int i = 0; i < s.length; i++) {
+            suma += s[i] * v[i];
+
+        }
+        suma = Math.rint(suma * 100) / 100;
+
+        if (suma == cambio) {
+
+            return true;
+
+        } else {
+            return false;
+        }
+
+    }
+
+    public boolean Factible(int s[], double v[], double cambio, double x, int c[]) {
+        double suma = 0.0;
+
+        for (int i = 0; i < s.length; i++) {
+            suma += s[i] * v[i];
+
+        }
+        suma = suma + x;
+        suma = Math.rint(suma * 100) / 100;
+
+        if (suma <= cambio) {
+
+            return true;
+        } else {
+
+            return false;
+
+        }
+
+    }
     
 }

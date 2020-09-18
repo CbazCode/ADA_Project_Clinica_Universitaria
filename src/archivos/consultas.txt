@@ -1,4 +1,4 @@
-111666  *signo 1  oh biaia  b  c
+111666  *signo 1  TipoSangre  b  c
 2524  *signo 1 *signo 2 *signo 3  *sin 1 *sin 2  *res 1 *res 2  *dio 1 *dia 2
 2524  *go *yes  *sin3 *sin6  *nat *suim  *si *no
-2524  jajaja  jijijij  jejeje  jojojo
+2524  *no *no  *sin3 *sin6  *nat *suim  *si *no

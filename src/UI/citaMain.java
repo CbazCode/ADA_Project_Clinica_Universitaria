@@ -24,49 +24,51 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
 
-
 /**
  *
  * @author Kioshi
  */
 public class citaMain extends javax.swing.JFrame {
-    
-    private LineBorder border = new LineBorder((new Color(107, 179, 35)),5);
-    int xx,xy;
+
+    private LineBorder border = new LineBorder((new Color(107, 179, 35)), 5);
+    int xx, xy;
     ArrayList<Cita> citas = new ArrayList<Cita>();
-    DefaultTableModel modelo = new DefaultTableModel(){
-        public boolean isCellEditable(int rowIndex,int columnIndex){return false;}
-        
+    DefaultTableModel modelo = new DefaultTableModel() {
+        public boolean isCellEditable(int rowIndex, int columnIndex) {
+            return false;
+        }
+
     };
-    
+
     public citaMain() {
         initComponents();
-        this.setLocationRelativeTo(null); 
+        this.setLocationRelativeTo(null);
         this.getRootPane().setBorder(border);
         completarTabla();
         completarDatos();
-        
+
     }
+
     private static class HeaderRenderer implements TableCellRenderer {
-       DefaultTableCellRenderer renderer;
 
-       public HeaderRenderer(JTable table) {
-           renderer = (DefaultTableCellRenderer)
-               table.getTableHeader().getDefaultRenderer();
-           renderer.setHorizontalAlignment(JLabel.CENTER);
-       }
+        DefaultTableCellRenderer renderer;
 
-       @Override
-       public Component getTableCellRendererComponent(
-           JTable table, Object value, boolean isSelected,
-           boolean hasFocus, int row, int col) {
-           return renderer.getTableCellRendererComponent(
-               table, value, isSelected, hasFocus, row, col);
-       }
+        public HeaderRenderer(JTable table) {
+            renderer = (DefaultTableCellRenderer) table.getTableHeader().getDefaultRenderer();
+            renderer.setHorizontalAlignment(JLabel.CENTER);
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(
+                JTable table, Object value, boolean isSelected,
+                boolean hasFocus, int row, int col) {
+            return renderer.getTableCellRendererComponent(
+                    table, value, isSelected, hasFocus, row, col);
+        }
     }
-    
-    private void completarTabla(){
-        
+
+    private void completarTabla() {
+
         modelo.addColumn("Codigo");
         modelo.addColumn("DNI del paciente");
         modelo.addColumn("Especialidad del médico");
@@ -81,54 +83,51 @@ public class citaMain extends javax.swing.JFrame {
         columnModel.getColumn(3).setPreferredWidth(120);
         columnModel.getColumn(4).setPreferredWidth(110);
         columnModel.getColumn(5).setPreferredWidth(120);
-        
-        
+
         JTableHeader header = tablaTest.getTableHeader();
         header.setDefaultRenderer(new HeaderRenderer(tablaTest));
         tablaTest.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         modelo.setRowCount(0);
         completarDatos();
-        
-        
+
     }
-    public void completarDatos(){
+
+    public void completarDatos() {
         modelo.setRowCount(0);
         leerArchivo();
     }
+
     private void leerArchivo() {
-       File file = null;
-       FileReader fr = null;
-       BufferedReader br = null;
-       citas.clear();
-       try{
-           file = new File("src/archivos/cita.txt");
-           fr = new FileReader(file);
-           br = new BufferedReader(fr);
-           Object[] linea = br.lines().toArray();
-           for(int i = 0; i<linea.length;i++){
-               String[] row = linea[i].toString().split("  ");
-               modelo.addRow(row);
-               Cita ncita = new Cita();
-               ncita.setCodigoHist(Integer.parseInt(row[0]));
-               ncita.setDNI(Integer.parseInt(row[1]));
-               ncita.setEspecialidad(row[2]);
-               ncita.setFechaCita(row[3]);
-               ncita.setHoraCita(row[4]);
-               ncita.setPorPagar(Float.parseFloat(row[5]));
-               citas.add(ncita);
-           }
-       }catch(Exception e){
-           System.out.println("ERROR EN LEER ARCHIVO DE CITA MAIN");
-           System.out.println("Error: " + e);
-       }
+        File file = null;
+        FileReader fr = null;
+        BufferedReader br = null;
+        citas.clear();
+        try {
+            file = new File("src/archivos/cita.txt");
+            fr = new FileReader(file);
+            br = new BufferedReader(fr);
+            Object[] linea = br.lines().toArray();
+            for (int i = 0; i < linea.length; i++) {
+                String[] row = linea[i].toString().split("  ");
+                modelo.addRow(row);
+                Cita ncita = new Cita();
+                ncita.setCodigoHist(Integer.parseInt(row[0]));
+                ncita.setDNI(Integer.parseInt(row[1]));
+                ncita.setEspecialidad(row[2]);
+                ncita.setFechaCita(row[3]);
+                ncita.setHoraCita(row[4]);
+                ncita.setPorPagar(Float.parseFloat(row[5]));
+                citas.add(ncita);
+            }
+        } catch (Exception e) {
+            System.out.println("ERROR EN LEER ARCHIVO DE CITA MAIN");
+            System.out.println("Error: " + e);
+        }
     }
-    
-    
+
     /**
      * Creates new form medicoMain
      */
-    
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -363,67 +362,67 @@ public class citaMain extends javax.swing.JFrame {
     private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
         int x = evt.getXOnScreen();
         int y = evt.getYOnScreen();
-        this.setLocation(x-xx,y-xy);
+        this.setLocation(x - xx, y - xy);
     }//GEN-LAST:event_jPanel1MouseDragged
 
     private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
-        xx=evt.getX();
-        xy=evt.getY();
+        xx = evt.getX();
+        xy = evt.getY();
     }//GEN-LAST:event_jPanel1MousePressed
-    TableRowSorter trs=null;
+    TableRowSorter trs = null;
     private void textBuscadorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textBuscadorKeyTyped
-        if(comboFiltro.getSelectedIndex()==0){
+        if (comboFiltro.getSelectedIndex() == 0) {
             textBuscador.addKeyListener(new KeyAdapter() {
-                public void keyReleased(KeyEvent ke){
-                    trs.setRowFilter(RowFilter.regexFilter("(?i)"+textBuscador.getText(), 0));
+                public void keyReleased(KeyEvent ke) {
+                    trs.setRowFilter(RowFilter.regexFilter("(?i)" + textBuscador.getText(), 0));
                 }
             });
-            trs =new TableRowSorter(modelo);
+            trs = new TableRowSorter(modelo);
             tablaTest.setRowSorter(trs);
         }
-        if(comboFiltro.getSelectedIndex()==1){
+        if (comboFiltro.getSelectedIndex() == 1) {
             textBuscador.addKeyListener(new KeyAdapter() {
-                public void keyReleased(KeyEvent ke){
-                    trs.setRowFilter(RowFilter.regexFilter("(?i)"+textBuscador.getText(), 1));
+                public void keyReleased(KeyEvent ke) {
+                    trs.setRowFilter(RowFilter.regexFilter("(?i)" + textBuscador.getText(), 1));
                 }
             });
-            trs =new TableRowSorter(modelo);
+            trs = new TableRowSorter(modelo);
             tablaTest.setRowSorter(trs);
         }
-        if(comboFiltro.getSelectedIndex()==2){
+        if (comboFiltro.getSelectedIndex() == 2) {
             textBuscador.addKeyListener(new KeyAdapter() {
-                public void keyReleased(KeyEvent ke){
-                    trs.setRowFilter(RowFilter.regexFilter("(?i)"+textBuscador.getText(), 2));
+                public void keyReleased(KeyEvent ke) {
+                    trs.setRowFilter(RowFilter.regexFilter("(?i)" + textBuscador.getText(), 2));
                 }
             });
-            trs =new TableRowSorter(modelo);
+            trs = new TableRowSorter(modelo);
             tablaTest.setRowSorter(trs);
         }
-        if(comboFiltro.getSelectedIndex()==3){
+        if (comboFiltro.getSelectedIndex() == 3) {
             textBuscador.addKeyListener(new KeyAdapter() {
-                public void keyReleased(KeyEvent ke){
-                    trs.setRowFilter(RowFilter.regexFilter("(?i)"+textBuscador.getText(), 3));
+                public void keyReleased(KeyEvent ke) {
+                    trs.setRowFilter(RowFilter.regexFilter("(?i)" + textBuscador.getText(), 3));
                 }
             });
-            trs =new TableRowSorter(modelo);
+            trs = new TableRowSorter(modelo);
             tablaTest.setRowSorter(trs);
         }
-        if(comboFiltro.getSelectedIndex()==4){
+        if (comboFiltro.getSelectedIndex() == 4) {
             textBuscador.addKeyListener(new KeyAdapter() {
-                public void keyReleased(KeyEvent ke){
-                    trs.setRowFilter(RowFilter.regexFilter("(?i)"+textBuscador.getText(), 4));
+                public void keyReleased(KeyEvent ke) {
+                    trs.setRowFilter(RowFilter.regexFilter("(?i)" + textBuscador.getText(), 4));
                 }
             });
-            trs =new TableRowSorter(modelo);
+            trs = new TableRowSorter(modelo);
             tablaTest.setRowSorter(trs);
         }
-        if(comboFiltro.getSelectedIndex()==5){
+        if (comboFiltro.getSelectedIndex() == 5) {
             textBuscador.addKeyListener(new KeyAdapter() {
-                public void keyReleased(KeyEvent ke){
-                    trs.setRowFilter(RowFilter.regexFilter("(?i)"+textBuscador.getText(), 5));
+                public void keyReleased(KeyEvent ke) {
+                    trs.setRowFilter(RowFilter.regexFilter("(?i)" + textBuscador.getText(), 5));
                 }
             });
-            trs =new TableRowSorter(modelo);
+            trs = new TableRowSorter(modelo);
             tablaTest.setRowSorter(trs);
         }
     }//GEN-LAST:event_textBuscadorKeyTyped
@@ -434,24 +433,23 @@ public class citaMain extends javax.swing.JFrame {
     }//GEN-LAST:event_bSalirActionPerformed
 
     private void bNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bNuevoActionPerformed
-        
-        nuevaCita cc= new nuevaCita(this,true);
+
+        nuevaCita cc = new nuevaCita(this, true);
         cc.setVisible(true);
-        if(!cc.isVisible()){
+        if (!cc.isVisible()) {
             completarDatos();
         }
     }//GEN-LAST:event_bNuevoActionPerformed
 
     private void bEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEditarActionPerformed
-        
+
         int filaseleccionada;
-        try{
-            filaseleccionada= tablaTest.getSelectedRow();
-            if (filaseleccionada==-1){
+        try {
+            filaseleccionada = tablaTest.getSelectedRow();
+            if (filaseleccionada == -1) {
                 JOptionPane.showMessageDialog(null, "No se ha seleccionado ninguna fila");
-            }
-            else{
-                
+            } else {
+
                 int codigoCita = Integer.parseInt((String) tablaTest.getValueAt(filaseleccionada, 0));
                 int dniUsuario = Integer.parseInt((String) tablaTest.getValueAt(filaseleccionada, 1));
                 String especialidadMedico = (String) tablaTest.getValueAt(filaseleccionada, 2);
@@ -463,44 +461,43 @@ public class citaMain extends javax.swing.JFrame {
                 editaCita ec = new editaCita(this, true);
                 ec.recibeDatos(cita);
                 ec.setVisible(true);
-                if(!ec.isVisible()){
+                if (!ec.isVisible()) {
                     completarDatos();
 
                 }
             }
-        }catch(HeadlessException ex){
+        } catch (HeadlessException ex) {
             System.out.println("ERROR EN B_EDITAAR DE CITA MAIN");
             System.err.println("El error es " + ex);
         }
     }//GEN-LAST:event_bEditarActionPerformed
 
     private void tablaTestMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaTestMouseClicked
-        if(evt.getClickCount()==2){
+        if (evt.getClickCount() == 2) {
             int filaseleccionada;
-            try{
-                filaseleccionada= tablaTest.getSelectedRow();
-                if (filaseleccionada==-1){
+            try {
+                filaseleccionada = tablaTest.getSelectedRow();
+                if (filaseleccionada == -1) {
                     JOptionPane.showMessageDialog(null, "No se ha seleccionado ninguna fila");
-                }
-                else{
+                } else {
 
                     int codigoCita = Integer.parseInt((String) tablaTest.getValueAt(filaseleccionada, 0));
-                    int dniUsuario = Integer.parseInt((String)tablaTest.getValueAt(filaseleccionada, 1));
-                    String especialidadMedico = (String)tablaTest.getValueAt(filaseleccionada, 2);
-                    String fechaCita =(String)tablaTest.getValueAt(filaseleccionada, 3) ;
+                    int dniUsuario = Integer.parseInt((String) tablaTest.getValueAt(filaseleccionada, 1));
+                    String especialidadMedico = (String) tablaTest.getValueAt(filaseleccionada, 2);
+                    String fechaCita = (String) tablaTest.getValueAt(filaseleccionada, 3);
                     String horaCita = (String) tablaTest.getValueAt(filaseleccionada, 4);
                     float porPagar = Float.parseFloat((String) tablaTest.getValueAt(filaseleccionada, 5));
-                    Cita cita = new Cita(codigoCita, dniUsuario, especialidadMedico, fechaCita, horaCita,porPagar);
+                    Cita cita = new Cita(codigoCita, dniUsuario, especialidadMedico, fechaCita, horaCita, porPagar);
 
-                    editaCita ec= new editaCita(this,true);
+                    editaCita ec = new editaCita(this, true);
                     ec.recibeDatos(cita);
                     ec.setVisible(true);
-                    if(!ec.isVisible()){
+                    if (!ec.isVisible()) {
                         completarDatos();
 
                     }
                 }
-            }catch(HeadlessException ex){
+            } catch (HeadlessException ex) {
                 System.out.println("ERROR EN TABLA TEST DE CITA MAIN");
                 System.err.println("El error es " + ex);
             }
@@ -511,34 +508,33 @@ public class citaMain extends javax.swing.JFrame {
         // TODO add your handling code here:
         //int n = jComboBox1.getSelectedIndex();
         //Item 0, 1, 2, 3
-        if(jComboBox1.getSelectedIndex() == 0){
-            ordenarCita(true,0,99);
+        if (jComboBox1.getSelectedIndex() == 0) {
+            ordenarCita(true, 0, 99);
         }
-        if(jComboBox1.getSelectedIndex() == 1){
-            ordenarCita(true,1,99);
+        if (jComboBox1.getSelectedIndex() == 1) {
+            ordenarCita(true, 1, 99);
         }
-        if(jComboBox1.getSelectedIndex() == 2){
-            ordenarCita(false,3,0);
+        if (jComboBox1.getSelectedIndex() == 2) {
+            ordenarCita(false, 3, 0);
         }
-        if(jComboBox1.getSelectedIndex() == 3){
-            ordenarCita(false,3,99);
+        if (jComboBox1.getSelectedIndex() == 3) {
+            ordenarCita(false, 3, 99);
         }
-        if(jComboBox1.getSelectedIndex() == 4){
-            ordenarCita(false,3,1);
+        if (jComboBox1.getSelectedIndex() == 4) {
+            ordenarCita(false, 3, 1);
         }
-        if(jComboBox1.getSelectedIndex() == 5){
-            ordenarCita(true,2,1);
+        if (jComboBox1.getSelectedIndex() == 5) {
+            ordenarCita(true, 2, 1);
         }
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void bporPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bporPagarActionPerformed
-      /* int filaseleccionada;
-        try{
-            filaseleccionada= tablaTest.getSelectedRow();
-            if (filaseleccionada==-1){
+        int filaseleccionada;
+        try {
+            filaseleccionada = tablaTest.getSelectedRow();
+            if (filaseleccionada == -1) {
                 JOptionPane.showMessageDialog(null, "No se ha seleccionado ninguna fila");
-            }
-            else{
+            } else {
                 //ACA METES EL ALGORITMO VORAZ LEONIDAS 
                 int codigoCita = Integer.parseInt((String) tablaTest.getValueAt(filaseleccionada, 0));
                 int dniUsuario = Integer.parseInt((String) tablaTest.getValueAt(filaseleccionada, 1));
@@ -546,101 +542,101 @@ public class citaMain extends javax.swing.JFrame {
                 String fechaCita = (String) tablaTest.getValueAt(filaseleccionada, 3);
                 String horaCita = (String) tablaTest.getValueAt(filaseleccionada, 4);
                 float porPagar = Float.parseFloat((String) tablaTest.getValueAt(filaseleccionada, 5));
-                Cita cita = new Cita(codigoCita, dniUsuario, especialidadMedico, fechaCita, horaCita,porPagar);
+                Cita cita = new Cita(codigoCita, dniUsuario, especialidadMedico, fechaCita, horaCita, porPagar);
 
-                editaCita ec = new editaCita(this, true);
-                ec.recibeDatos(cita);
-                ec.setVisible(true);
-                if(!ec.isVisible()){
+                citaPagar cp = new citaPagar(this, true);
+                cp.recibeDatos(cita);
+                cp.setVisible(true);
+                if (!cp.isVisible()) {
                     completarDatos();
                 }
             }
-        }catch(HeadlessException ex){
+        } catch (HeadlessException ex) {
             System.err.println("El error es " + ex);
-        }*/
-        
+        }
+
     }//GEN-LAST:event_bporPagarActionPerformed
 
-    public void vaciarArchivo(){
+    public void vaciarArchivo() {
         File archivo = new File("src/archivos/cita.txt");
         try {
-            PrintWriter salida  = new PrintWriter(archivo);
+            PrintWriter salida = new PrintWriter(archivo);
             salida.print("");
             salida.close();
         } catch (FileNotFoundException ex) {
             ex.printStackTrace(System.out);
         }
     }
+
     //Metodo de Seleccion
-    public void ordenaCadenas(Cita[] v, int interruptorCadenas)
-    {
+    public void ordenaCadenas(Cita[] v, int interruptorCadenas) {
         int posMin;
         Cita aux;
 
-        for(int i=0;i<v.length-1;i++)
-        {
-            posMin=i;
-            for(int j=i+1;j<v.length;j++){
-                if(interruptorCadenas == 0){
-                    if(v[posMin].getEspecialidad().compareTo(v[j].getEspecialidad())>0) posMin=j;
+        for (int i = 0; i < v.length - 1; i++) {
+            posMin = i;
+            for (int j = i + 1; j < v.length; j++) {
+                if (interruptorCadenas == 0) {
+                    if (v[posMin].getEspecialidad().compareTo(v[j].getEspecialidad()) > 0) {
+                        posMin = j;
+                    }
                 }
-                if(interruptorCadenas == 1){
-                    if(v[posMin].getHoraCita().compareTo(v[j].getHoraCita())>0) posMin=j;
+                if (interruptorCadenas == 1) {
+                    if (v[posMin].getHoraCita().compareTo(v[j].getHoraCita()) > 0) {
+                        posMin = j;
+                    }
                 }
-                              
+
             }
-            if(posMin!=i)
-            {
-                aux=v[i];
-                v[i]=v[posMin];
-                v[posMin]=aux;
+            if (posMin != i) {
+                aux = v[i];
+                v[i] = v[posMin];
+                v[posMin] = aux;
             }
 
         }
     }
-    public void ordenarCita(boolean numero,int interruptor, int interruptorCadenas){
+
+    public void ordenarCita(boolean numero, int interruptor, int interruptorCadenas) {
         Cita arrayCita[] = new Cita[citas.size()];
-        for(int i = 0; i<citas.size();i++){
-                arrayCita[i]=citas.get(i);
-               System.out.println("en ordenado " + arrayCita[i]);
+        for (int i = 0; i < citas.size(); i++) {
+            arrayCita[i] = citas.get(i);
+            System.out.println("en ordenado " + arrayCita[i]);
         }
-  
-        int jump, i, j, k ;
+
+        int jump, i, j, k;
         Cita auxiliar;
         jump = arrayCita.length / 2;
-        if(numero == true){
+        if (numero == true) {
             while (jump > 0) {
                 for (i = jump; i < arrayCita.length; i++) {
                     j = i - jump;
                     while (j >= 0) {
                         k = j + jump;
-                        if(interruptor == 0){
+                        if (interruptor == 0) {
                             if (arrayCita[j].getCodigoHist() <= arrayCita[k].getCodigoHist()) {
                                 j = -1;
-                            }
-                            else {
-                                auxiliar = arrayCita[j];
-                                arrayCita[j] = arrayCita[k];
-                                arrayCita[k] = auxiliar;
-                                j = j - 1;
-                            }
-                        } 
-                        if(interruptor == 1){
-                            if (arrayCita[j].getDNI() <= arrayCita[k].getDNI()) {
-                                j = -1;
-                            }
-                            else {
+                            } else {
                                 auxiliar = arrayCita[j];
                                 arrayCita[j] = arrayCita[k];
                                 arrayCita[k] = auxiliar;
                                 j = j - 1;
                             }
                         }
-                        if(interruptor == 2){
+                        if (interruptor == 1) {
+                            if (arrayCita[j].getDNI() <= arrayCita[k].getDNI()) {
+                                j = -1;
+                            } else {
+                                auxiliar = arrayCita[j];
+                                arrayCita[j] = arrayCita[k];
+                                arrayCita[k] = auxiliar;
+                                j = j - 1;
+                            }
+                        }
+                        if (interruptor == 2) {
                             if (arrayCita[j].getPorPagar() <= arrayCita[k].getPorPagar()) {
                                 j = -1;
-                            }
-                            else {
+                            } else {
                                 auxiliar = arrayCita[j];
                                 arrayCita[j] = arrayCita[k];
                                 arrayCita[k] = auxiliar;
@@ -651,29 +647,24 @@ public class citaMain extends javax.swing.JFrame {
                 }
                 jump = jump / 2;
             }
-        }else{
-            if(interruptor == 3){
-            ordenaCadenas(arrayCita,interruptorCadenas);
+        } else {
+            if (interruptor == 3) {
+                ordenaCadenas(arrayCita, interruptorCadenas);
+            }
         }
-        }
- 
 
-        
-        
-        
         vaciarArchivo();
-        
+
         for (Cita obj : arrayCita) {
-            System.out.println(String.valueOf(obj.getCodigoHist())+"  "+String.valueOf(obj.getDNI())+"  "+obj.getEspecialidad()+ "  "+obj.getFechaCita()+ "  "+obj.getHoraCita()+ "  "+obj.getPorPagar());       
+            System.out.println(String.valueOf(obj.getCodigoHist()) + "  " + String.valueOf(obj.getDNI()) + "  " + obj.getEspecialidad() + "  " + obj.getFechaCita() + "  " + obj.getHoraCita() + "  " + obj.getPorPagar());
             File file = new File("src/archivos/cita.txt");
             FileWriter fichero = null;
             PrintWriter pw = null;
-            try
-            {
+            try {
                 fichero = new FileWriter(file.getAbsoluteFile(), true);
                 pw = new PrintWriter(fichero);
 
-                pw.println(String.valueOf(obj.getCodigoHist())+"  "+String.valueOf(obj.getDNI())+"  "+obj.getEspecialidad()+ "  "+obj.getFechaCita()+ "  "+obj.getHoraCita()+ "  "+obj.getPorPagar());
+                pw.println(String.valueOf(obj.getCodigoHist()) + "  " + String.valueOf(obj.getDNI()) + "  " + obj.getEspecialidad() + "  " + obj.getFechaCita() + "  " + obj.getHoraCita() + "  " + obj.getPorPagar());
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -681,8 +672,9 @@ public class citaMain extends javax.swing.JFrame {
                 try {
                     // Nuevamente aprovechamos el finally para
                     // asegurarnos que se cierra el fichero.
-                    if (null != fichero)
+                    if (null != fichero) {
                         fichero.close();
+                    }
                 } catch (Exception e2) {
                     e2.printStackTrace();
                 }
@@ -693,7 +685,6 @@ public class citaMain extends javax.swing.JFrame {
         /*showArray(array);*/
     }
 
-    
     /**
      * @param args the command line arguments
      */
