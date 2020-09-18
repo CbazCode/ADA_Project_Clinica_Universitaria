@@ -1,3 +1,15 @@
-15995887  Julio  Leon  Chavez  999999999  leonidas@gmail.com  UNI  Odontopediatría
-72179822  Sebastian  Mori  Leon  987654321  sebas.ml@gmail.com  Ricardo Palma  Endodoncia
-1234567  Emilio  Fuentes  Paler  999999999  emi.paler@gmail.com  Ricardo Palma  Ortodoncia
+14006010  Julio  Leon  Chavez  999999999  leonidas@gmail.com  UPC  Odontopediatría
+14006011  Juan  Perez  Chavez  999999998  perez@gmail.com  UPC  Cardiologia
+14006012  Federico  Salazar  Salinas  999999997  salinas@gmail.com  UPN  Pediatria
+14006013  Frank  Heisemberg  Mamani  999999995  fhm@gmail.com  UNMSM  Traumatologia
+14006014  Julio  Leon  Chavez  999999994  leonidas@gmail.com  UPC  Odontopediatría
+14006015  Daniel  Orejuelo  Chavez  999999993  daniel@gmail.com  UNI  Cardiologia
+14006016  Carlos  Pizarro  Salinas  999999992  salinas@gmail.com  UPN  Pediatria
+14006017  Angelo  Heisemberg  Vivanco  999999991  fhm@gmail.com  UNMSM  Traumatologia
+14006018  Julio  Leon  Chavez  999999999  leonidas@gmail.com  UNI  Odontopediatría
+14006019  Leonidas  Leon  Chavez  999999998  perez@gmail.com  UNI  Urologia
+14006020  Diego  Leon  Ortiz  999999597  diegolo@gmail.com  HARVARD  Pediatria
+14006021  Francis  Mori  Bautista  999999995  fhm@gmail.com  UNMSM  Endodoncia
+14006022  Kioshi  Okamoto  Rojas  999999994  kjor9@gmail.com  UNI  Pediatría
+14006023  Joel  Vilca  Tarazona  999999993  jou@gmail.com  UPC  Bioingenieria
+14006024  Benito  Juarez  Fonseca  999666666  benito@gmail.com  UNI  Neurologia

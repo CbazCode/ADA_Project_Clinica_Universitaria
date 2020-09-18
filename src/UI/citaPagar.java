@@ -226,7 +226,7 @@ public class citaPagar extends javax.swing.JDialog  {
                        mensaje = "No necesita vuelto";
                        
                    }else{
-                       int c[] = {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5};
+                       int c[] = {50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50};
                        int s[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
                        double v[] = {200, 100, 50, 20, 10, 5, 2, 1, 0.5, 0.2, 0.1, 0.05, 0.01};
 

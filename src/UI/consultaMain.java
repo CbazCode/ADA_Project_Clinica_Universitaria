@@ -91,10 +91,12 @@ public class consultaMain extends javax.swing.JFrame {
         
     }
     public void completarDatos(){
+        System.out.println("Completando datos");
         modelo.setRowCount(0);
         leerArchivo();
     }
     private void leerArchivo() {
+        System.out.println("Leyendo archivo");
        File file = null;
        FileReader fr = null;
        BufferedReader br = null;
@@ -105,6 +107,7 @@ public class consultaMain extends javax.swing.JFrame {
            Object[] linea = br.lines().toArray();
            for(int i = 0; i<linea.length;i++){
                String[] row = linea[i].toString().split("  ");
+               System.out.println("prueba: "+linea[i]);
                modelo.addRow(row);
            
            }
@@ -361,8 +364,10 @@ public class consultaMain extends javax.swing.JFrame {
         
         nuevaConsulta nc= new nuevaConsulta();
         nc.setVisible(true);
-        if(!nc.isVisible()){
-            completarDatos();
+        System.out.println("Visible? : "+ nc.isVisible());
+        if(nc.isVisible()){
+            this.completarDatos();
+            System.out.println("Completo datos");
         }
     }//GEN-LAST:event_bNuevoActionPerformed
 

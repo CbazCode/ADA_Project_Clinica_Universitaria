@@ -1,4 +1,41 @@
-111666  *signo 1  TipoSangre  b  c
-2524  *signo 1 *signo 2 *signo 3  *sin 1 *sin 2  *res 1 *res 2  *dio 1 *dia 2
-2524  *go *yes  *sin3 *sin6  *nat *suim  *si *no
-2524  *no *no  *sin3 *sin6  *nat *suim  *si *no
+113  *signo 1 *signo 2 *signo 3  *sintoma 1 *sinroma 2  *resultado 1 *resultado 2  *diag 1 *diagnostico 2
+114  *signo 1 *signo 2 *signo 3  *sintoma 1 *sinroma 2  *resultado 1 *resultado 2  *diag 1 *diagnostico 2
+115  *signo 1 *signo 2 *signo 3  *sintoma 1 *sinroma 2  *resultado 1 *resultado 2  *diag 1 *diagnostico 2
+116  *signo 1 *signo 2 *signo 3  *sintoma 1 *sinroma 2  *resultado 1 *resultado 2  *diag 1 *diagnostico 2
+117  *signo 1 *signo 2 *signo 3  *sintoma 1 *sinroma 2  *resultado 1 *resultado 2  *diag 1 *diagnostico 2
+118  *signo 1 *signo 2 *signo 3  *sintoma 1 *sinroma 2  *resultado 1 *resultado 2  *diag 1 *diagnostico 2
+119  *signo 1 *signo 2 *signo 3  *sintoma 1 *sinroma 2  *resultado 1 *resultado 2  *diag 1 *diagnostico 2
+120  *signo 1 *signo 2 *signo 3  *sintoma 1 *sinroma 2  *resultado 1 *resultado 2  *diag 1 *diagnostico 2
+113  *signo 1 *signo 2 *signo 3  *sintoma 1 *sinroma 2  *resultado 1 *resultado 2  *diag 1 *diagnostico 2
+114  *signo 1 *signo 2 *signo 3  *sintoma 1 *sinroma 2  *resultado 1 *resultado 2  *diag 1 *diagnostico 2
+115  *signo 1 *signo 2 *signo 3  *sintoma 1 *sinroma 2  *resultado 1 *resultado 2  *diag 1 *diagnostico 2
+116  *signo 1 *signo 2 *signo 3  *sintoma 1 *sinroma 2  *resultado 1 *resultado 2  *diag 1 *diagnostico 2
+117  *signo 1 *signo 2 *signo 3  *sintoma 1 *sinroma 2  *resultado 1 *resultado 2  *diag 1 *diagnostico 2
+118  *signo 1 *signo 2 *signo 3  *sintoma 1 *sinroma 2  *resultado 1 *resultado 2  *diag 1 *diagnostico 2
+119  *signo 1 *signo 2 *signo 3  *sintoma 1 *sinroma 2  *resultado 1 *resultado 2  *diag 1 *diagnostico 2
+120  *signo 1 *signo 2 *signo 3  *sintoma 1 *sinroma 2  *resultado 1 *resultado 2  *diag 1 *diagnostico 2
+113  *signo 1 *signo 2 *signo 3  *sintoma 1 *sinroma 2  *resultado 1 *resultado 2  *diag 1 *diagnostico 2
+114  *signo 1 *signo 2 *signo 3  *sintoma 1 *sinroma 2  *resultado 1 *resultado 2  *diag 1 *diagnostico 2
+115  *signo 1 *signo 2 *signo 3  *sintoma 1 *sinroma 2  *resultado 1 *resultado 2  *diag 1 *diagnostico 2
+116  *signo 1 *signo 2 *signo 3  *sintoma 1 *sinroma 2  *resultado 1 *resultado 2  *diag 1 *diagnostico 2
+117  *signo 1 *signo 2 *signo 3  *sintoma 1 *sinroma 2  *resultado 1 *resultado 2  *diag 1 *diagnostico 2
+118  *signo 1 *signo 2 *signo 3  *sintoma 1 *sinroma 2  *resultado 1 *resultado 2  *diag 1 *diagnostico 2
+119  *signo 1 *signo 2 *signo 3  *sintoma 1 *sinroma 2  *resultado 1 *resultado 2  *diag 1 *diagnostico 2
+120  *signo 1 *signo 2 *signo 3  *sintoma 1 *sinroma 2  *resultado 1 *resultado 2  *diag 1 *diagnostico 2
+113  *signo 1 *signo 2 *signo 3  *sintoma 1 *sinroma 2  *resultado 1 *resultado 2  *diag 1 *diagnostico 2
+114  *signo 1 *signo 2 *signo 3  *sintoma 1 *sinroma 2  *resultado 1 *resultado 2  *diag 1 *diagnostico 2
+115  *signo 1 *signo 2 *signo 3  *sintoma 1 *sinroma 2  *resultado 1 *resultado 2  *diag 1 *diagnostico 2
+116  *signo 1 *signo 2 *signo 3  *sintoma 1 *sinroma 2  *resultado 1 *resultado 2  *diag 1 *diagnostico 2
+117  *signo 1 *signo 2 *signo 3  *sintoma 1 *sinroma 2  *resultado 1 *resultado 2  *diag 1 *diagnostico 2
+118  *signo 1 *signo 2 *signo 3  *sintoma 1 *sinroma 2  *resultado 1 *resultado 2  *diag 1 *diagnostico 2
+119  *signo 1 *signo 2 *signo 3  *sintoma 1 *sinroma 2  *resultado 1 *resultado 2  *diag 1 *diagnostico 2
+120  *signo 1 *signo 2 *signo 3  *sintoma 1 *sinroma 2  *resultado 1 *resultado 2  *diag 1 *diagnostico 2
+113  *signo 1 *signo 2 *signo 3  *sintoma 1 *sinroma 2  *resultado 1 *resultado 2  *diag 1 *diagnostico 2
+114  *signo 1 *signo 2 *signo 3  *sintoma 1 *sinroma 2  *resultado 1 *resultado 2  *diag 1 *diagnostico 2
+115  *signo 1 *signo 2 *signo 3  *sintoma 1 *sinroma 2  *resultado 1 *resultado 2  *diag 1 *diagnostico 2
+116  *signo 1 *signo 2 *signo 3  *sintoma 1 *sinroma 2  *resultado 1 *resultado 2  *diag 1 *diagnostico 2
+117  *signo 1 *signo 2 *signo 3  *sintoma 1 *sinroma 2  *resultado 1 *resultado 2  *diag 1 *diagnostico 2
+118  *signo 1 *signo 2 *signo 3  *sintoma 1 *sinroma 2  *resultado 1 *resultado 2  *diag 1 *diagnostico 2
+119  *signo 1 *signo 2 *signo 3  *sintoma 1 *sinroma 2  *resultado 1 *resultado 2  *diag 1 *diagnostico 2
+120  *signo 1 *signo 2 *signo 3  *sintoma 1 *sinroma 2  *resultado 1 *resultado 2  *diag 1 *diagnostico 2
+113  *signo a *signo b  *signo a *signo b  *signo a *signo b  *signo a *signo b

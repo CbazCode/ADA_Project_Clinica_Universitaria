@@ -284,7 +284,7 @@ public final class historialMain extends javax.swing.JFrame {
             }
         });
 
-        ButtonConsultas.setText("CONSULTAS");
+        ButtonConsultas.setText("SALIR");
         ButtonConsultas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ButtonConsultasActionPerformed(evt);
@@ -422,7 +422,8 @@ public final class historialMain extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel8MouseDragged
 
     private void ButtonConsultasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonConsultasActionPerformed
-        hconsulta.setVisible(true);
+        dispose();
+//hconsulta.setVisible(true);
     }//GEN-LAST:event_ButtonConsultasActionPerformed
 
     private void ButtonCitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonCitasActionPerformed

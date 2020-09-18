@@ -145,7 +145,7 @@ public class nuevoMedico extends javax.swing.JDialog {
 
         jLabel7.setText("Correo electronico:");
 
-        jLabel8.setText("Centro médico:");
+        jLabel8.setText("Centro de estudios:");
 
         jLabel9.setText("Especialidad:");
 
@@ -205,7 +205,7 @@ public class nuevoMedico extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(tApellidoM)
                     .addComponent(tEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

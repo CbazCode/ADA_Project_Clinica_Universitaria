@@ -1,2 +1,3 @@
-1254  *ibuprofeno *salsa *cebolla  *Ocho veces al dia *Con ayuda medica *Funciona
-1254  *ibuprofeno *salsa *cebolla  *Ocho veces al dia *Con ayuda medica *Funciona
+1254  *ibuprofeno *salsa *cebolla *ajo  *Ocho veces al dia *Con ayuda medica *Funciona
+1254  *ibuprofeno *salsa *cebolla *ajo  *Ocho veces al dia *Con ayuda medica *Funciona
+115  *medi1 *medi2 *medi3  *medi1 *medi2

@@ -44,7 +44,7 @@ public class editaReceta extends javax.swing.JDialog {
     }
     
     public void modificar(){
-        
+        System.out.println("Modificar");
         File fileNuevo = new File("src/archivos/recetastemp.txt");
         File fileAntiguo = new File("src/archivos/recetas.txt");
         
@@ -104,7 +104,7 @@ public class editaReceta extends javax.swing.JDialog {
     }
     
     public void modificar1(){
-        
+        System.out.println("Modificar_1");
         File  fileAntiguo= new File("src/archivos/recetastemp.txt");
         File  fileNuevo= new File("src/archivos/recetas.txt");
         
@@ -135,7 +135,7 @@ public class editaReceta extends javax.swing.JDialog {
             fileAntiguo.delete();
             //fileAntiguo.renameTo(fileNuevo);
             
-            fileNuevo.delete();
+            //fileNuevo.delete();
             
             
             

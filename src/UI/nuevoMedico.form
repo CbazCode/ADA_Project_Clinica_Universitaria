@@ -161,7 +161,7 @@
                       <Component id="tApellidoM" max="32767" attributes="0"/>
                       <Component id="tEspecialidad" min="-2" pref="159" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="53" max="32767" attributes="0"/>
+                  <EmptySpace pref="50" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -243,7 +243,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel8">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Centro m&#xe9;dico:"/>
+            <Property name="text" type="java.lang.String" value="Centro de estudios:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel9">
